@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'com.dbkynd'
-version = '1.1'
+version = '1.0'
 def jdaVersion = '4.3.0_340'
 
 repositories {
