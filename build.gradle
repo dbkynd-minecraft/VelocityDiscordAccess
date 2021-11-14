@@ -1,0 +1,74 @@
+import com.sun.org.apache.xml.internal.security.utils.JDKXPathAPI
+
+plugins {
+    id 'java'
+    id 'eclipse'
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.0.1"
+    id 'com.github.johnrengelman.shadow' version "6.1.0"
+}
+
+group = 'com.dbkynd'
+version = '1.0'
+def jdaVersion = '4.3.0_340'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'velocity'
+        url = 'https://nexus.velocitypowered.com/repository/maven-public/'
+    }
+    maven {
+        url "https://m2.dv8tion.net/releases"
+    }
+}
+
+dependencies {
+    compileOnly "com.velocitypowered:velocity-api:3.0.1"
+    annotationProcessor "com.velocitypowered:velocity-api:3.0.1"
+    compileOnly "net.luckperms:api:5.3"
+    shadow("mysql:mysql-connector-java:8.0.27")
+    shadow("net.dv8tion:JDA:$jdaVersion") {
+        exclude module: "opus-java"
+    }
+    shadow group: "commons-io", name: "commons-io", version: "2.11.0"
+    shadow "com.moandjiezana.toml:toml4j:0.7.2"
+}
+
+shadowJar {
+    classifier ''
+    configurations = [project.configurations.shadow]
+}
+
+def targetJavaVersion = 11
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+def templateSource = file('src/main/templates')
+def templateDest = layout.buildDirectory.dir('generated/sources/templates')
+def generateTemplates = tasks.register('generateTemplates', Copy) { task ->
+    def props = [
+            'version': project.version
+    ]
+    task.inputs.properties props
+
+    task.from templateSource
+    task.into templateDest
+    task.expand props
+}
+
+sourceSets.main.java.srcDir(generateTemplates.map { it.outputs })
+
+rootProject.idea.project.settings.taskTriggers.afterSync generateTemplates
+project.eclipse.synchronizationTasks(generateTemplates)

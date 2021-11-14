@@ -1,0 +1,18 @@
+[Discord]
+botToken = ""
+addCommandName = "addme"
+allowedChannelIds = []
+allowedRoleIds = []
+
+[Discord.Messages]
+embedMessageAdded = "Successfully added to the Minecraft user database!"
+embedMessageUpdated = "Entry found, Minecraft user database updated."
+kickMessage = "You are either not a member of the Discord or have not yet verified your account."
+
+[mySQL]
+host = ""
+port = "3306"
+database = ""
+username = ""
+password = ""
+tablePrefix = ""
