@@ -1,4 +1,4 @@
-package com.dbkynd.velocitydiscordaccess.sql;
+package com.dbkynd.vdaccess.sql;
 
 public class UserRecord {
     String discordid;

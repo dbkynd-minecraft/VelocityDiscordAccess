@@ -1,9 +1,9 @@
-package com.dbkynd.velocitydiscordaccess;
+package com.dbkynd.vdaccess;
 
-import com.dbkynd.velocitydiscordaccess.config.Config;
-import com.dbkynd.velocitydiscordaccess.discord.Discord;
-import com.dbkynd.velocitydiscordaccess.handlers.LoginHandler;
-import com.dbkynd.velocitydiscordaccess.sql.MySQLService;
+import com.dbkynd.vdaccess.config.Config;
+import com.dbkynd.vdaccess.discord.Discord;
+import com.dbkynd.vdaccess.handlers.LoginHandler;
+import com.dbkynd.vdaccess.sql.MySQLService;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import java.nio.file.Path;
 
 @Plugin(
-        id = "velocitydiscordaccess",
+        id = "vdaccess",
         name = "Velocity Discord Access",
         version = BuildConstants.VERSION,
         authors = {"DBKynd"},
@@ -24,17 +24,17 @@ import java.nio.file.Path;
                 @Dependency(id = "luckperms")
         }
 )
-public class VelocityDiscordAccess {
+public class VDAccess {
 
     public static ProxyServer server;
     public static Logger logger;
     public static Path dataDirectory;
 
     @Inject
-    public void VelocityInit(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
-        VelocityDiscordAccess.logger = logger;
-        VelocityDiscordAccess.dataDirectory = dataDirectory;
-        VelocityDiscordAccess.server = server;
+    public VDAccess(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+        VDAccess.logger = logger;
+        VDAccess.dataDirectory = dataDirectory;
+        VDAccess.server = server;
     }
 
     @Subscribe

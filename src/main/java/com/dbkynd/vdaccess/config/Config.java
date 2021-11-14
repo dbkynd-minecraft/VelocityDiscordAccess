@@ -1,6 +1,6 @@
-package com.dbkynd.velocitydiscordaccess.config;
+package com.dbkynd.vdaccess.config;
 
-import com.dbkynd.velocitydiscordaccess.VelocityDiscordAccess;
+import com.dbkynd.vdaccess.VDAccess;
 import com.moandjiezana.toml.Toml;
 import org.slf4j.Logger;
 
@@ -11,8 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Config {
-    private static final Logger logger = VelocityDiscordAccess.logger;
-    private Path dataDirectory = VelocityDiscordAccess.dataDirectory;
+    private static final Logger logger = VDAccess.logger;
+    private Path dataDirectory = VDAccess.dataDirectory;
     File directory = new File(String.valueOf(dataDirectory));
     File file = new File(directory, "config.toml");
 

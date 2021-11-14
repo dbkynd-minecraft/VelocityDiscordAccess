@@ -1,4 +1,4 @@
-package com.dbkynd.velocitydiscordaccess.permission;
+package com.dbkynd.vdaccess.permission;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;

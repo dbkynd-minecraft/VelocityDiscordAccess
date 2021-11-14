@@ -1,4 +1,4 @@
-package com.dbkynd.velocitydiscordaccess.mojang;
+package com.dbkynd.vdaccess.mojang;
 
 import java.util.UUID;
 

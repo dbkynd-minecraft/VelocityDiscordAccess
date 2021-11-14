@@ -1,6 +1,6 @@
-package com.dbkynd.velocitydiscordaccess.http;
+package com.dbkynd.vdaccess.http;
 
-import com.dbkynd.velocitydiscordaccess.mojang.MojangJSON;
+import com.dbkynd.vdaccess.mojang.MojangJSON;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 

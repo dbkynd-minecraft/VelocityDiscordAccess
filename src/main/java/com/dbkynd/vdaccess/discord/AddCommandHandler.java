@@ -1,12 +1,12 @@
-package com.dbkynd.velocitydiscordaccess.discord;
+package com.dbkynd.vdaccess.discord;
 
-import com.dbkynd.velocitydiscordaccess.VelocityDiscordAccess;
-import com.dbkynd.velocitydiscordaccess.config.Config;
-import com.dbkynd.velocitydiscordaccess.http.ImageDownloader;
-import com.dbkynd.velocitydiscordaccess.http.WebRequest;
-import com.dbkynd.velocitydiscordaccess.mojang.MojangJSON;
-import com.dbkynd.velocitydiscordaccess.sql.MySQLService;
-import com.dbkynd.velocitydiscordaccess.sql.UserRecord;
+import com.dbkynd.vdaccess.VDAccess;
+import com.dbkynd.vdaccess.config.Config;
+import com.dbkynd.vdaccess.http.ImageDownloader;
+import com.dbkynd.vdaccess.http.WebRequest;
+import com.dbkynd.vdaccess.mojang.MojangJSON;
+import com.dbkynd.vdaccess.sql.MySQLService;
+import com.dbkynd.vdaccess.sql.UserRecord;
 import com.moandjiezana.toml.Toml;
 import com.velocitypowered.api.proxy.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class AddCommandHandler {
-    private static final Logger logger = VelocityDiscordAccess.logger;
+    private static final Logger logger = VDAccess.logger;
     private static final WebRequest request = new WebRequest();
     private static final Toml config = new Config().read();
     private static final MySQLService sql = MySQLService.getInstance();
@@ -76,7 +76,7 @@ public class AddCommandHandler {
                 // Kick the member if they are currently joined and are updating the database
                 // Had a past player exploit this to get his friend on by staying logged in and running the Discord command, adding their friend
                 UserRecord userRecord = sql.getRegisteredPlayer("discord_id", discordId);
-                Collection<Player> connectedPlayers = VelocityDiscordAccess.server.getAllPlayers();
+                Collection<Player> connectedPlayers = VDAccess.server.getAllPlayers();
                 List<Player> playerNames = connectedPlayers.stream().filter(player -> Objects.equals(player.getUniqueId().toString(), userRecord.getUUID())).collect(Collectors.toList());
                 if (playerNames.size() > 0) {
                     // Kick user

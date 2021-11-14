@@ -1,11 +1,11 @@
-package com.dbkynd.velocitydiscordaccess.handlers;
+package com.dbkynd.vdaccess.handlers;
 
-import com.dbkynd.velocitydiscordaccess.VelocityDiscordAccess;
-import com.dbkynd.velocitydiscordaccess.config.Config;
-import com.dbkynd.velocitydiscordaccess.discord.Discord;
-import com.dbkynd.velocitydiscordaccess.permission.LuckPerm;
-import com.dbkynd.velocitydiscordaccess.sql.MySQLService;
-import com.dbkynd.velocitydiscordaccess.sql.UserRecord;
+import com.dbkynd.vdaccess.VDAccess;
+import com.dbkynd.vdaccess.config.Config;
+import com.dbkynd.vdaccess.discord.Discord;
+import com.dbkynd.vdaccess.permission.LuckPerm;
+import com.dbkynd.vdaccess.sql.MySQLService;
+import com.dbkynd.vdaccess.sql.UserRecord;
 import com.moandjiezana.toml.Toml;
 import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class LoginHandler {
     private static final Toml config = new Config().read();
     private static final MySQLService sql = MySQLService.getInstance();
-    private static final Logger logger = VelocityDiscordAccess.logger;
+    private static final Logger logger = VDAccess.logger;
 
     static String kickMessage = config.getString("Discord.Messages.kickMessage");
     static List<String> allowedRoles = new ArrayList<>(config.getList("Discord.allowedRoleIds"));

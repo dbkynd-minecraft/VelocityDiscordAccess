@@ -1,7 +1,7 @@
-package com.dbkynd.velocitydiscordaccess.sql;
+package com.dbkynd.vdaccess.sql;
 
-import com.dbkynd.velocitydiscordaccess.VelocityDiscordAccess;
-import com.dbkynd.velocitydiscordaccess.config.Config;
+import com.dbkynd.vdaccess.VDAccess;
+import com.dbkynd.vdaccess.config.Config;
 import com.moandjiezana.toml.Toml;
 import org.slf4j.Logger;
 
@@ -13,17 +13,16 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class MySQLService {
-    private static MySQLService single_instance = null;
-    private static final Logger logger = VelocityDiscordAccess.logger;
+    private static final Logger logger = VDAccess.logger;
     private static final Toml config = new Config().read();
+    private static MySQLService single_instance = null;
     TimeZone tz = TimeZone.getTimeZone("UTC");
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private MySQLConnection sql;
     private String tableName;
 
-    public static MySQLService getInstance()
-    {
+    public static MySQLService getInstance() {
         if (single_instance == null)
             single_instance = new MySQLService();
 
@@ -86,7 +85,7 @@ public class MySQLService {
 
     public void addNewPlayer(String discordId, String minecraftName, String minecraftUUID) throws SQLException {
         String now = df.format(new Date());
-        sql.update("INSERT INTO " + this.tableName + " (discord_id,minecraft_name,uuid,created_at,updated_at) VALUES ('" + discordId + "','" + minecraftName + "','" + minecraftUUID + "','" + now+ "','" + now + "');");
+        sql.update("INSERT INTO " + this.tableName + " (discord_id,minecraft_name,uuid,created_at,updated_at) VALUES ('" + discordId + "','" + minecraftName + "','" + minecraftUUID + "','" + now + "','" + now + "');");
     }
 
     public UserRecord getRegisteredPlayer(String column, String data) {

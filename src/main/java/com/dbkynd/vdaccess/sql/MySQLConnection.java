@@ -1,20 +1,18 @@
-package com.dbkynd.velocitydiscordaccess.sql;
+package com.dbkynd.vdaccess.sql;
 
-import com.dbkynd.velocitydiscordaccess.VelocityDiscordAccess;
+import com.dbkynd.vdaccess.VDAccess;
 import org.slf4j.Logger;
 
 import java.sql.*;
 
 public class MySQLConnection {
-    private static final Logger logger = VelocityDiscordAccess.logger;
-
-    private Connection connection;
-
+    private static final Logger logger = VDAccess.logger;
     private final String host;
     private final String port;
     private final String user;
     private final String password;
     private final String database;
+    private Connection connection;
 
     public MySQLConnection(String sqlHost, String sqlPort, String sqlDatabase, String sqlUser, String sqlPassword) {
         this.host = sqlHost;
@@ -90,7 +88,6 @@ public class MySQLConnection {
         }
         return false;
     }
-
 
 
     public void set(String selected, Object object, String column, String equality, String data, String table) throws SQLException {

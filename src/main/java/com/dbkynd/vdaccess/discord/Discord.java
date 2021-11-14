@@ -1,7 +1,7 @@
-package com.dbkynd.velocitydiscordaccess.discord;
+package com.dbkynd.vdaccess.discord;
 
-import com.dbkynd.velocitydiscordaccess.VelocityDiscordAccess;
-import com.dbkynd.velocitydiscordaccess.config.Config;
+import com.dbkynd.vdaccess.VDAccess;
+import com.dbkynd.vdaccess.config.Config;
 import com.moandjiezana.toml.Toml;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -23,13 +23,12 @@ import java.util.List;
 import static net.dv8tion.jda.api.interactions.commands.OptionType.STRING;
 
 public class Discord extends ListenerAdapter {
-    private static final Logger logger = VelocityDiscordAccess.logger;
+    private static final Logger logger = VDAccess.logger;
     private static final Toml config = new Config().read();
-    private static JDA jda;
-
     static String addCommand = config.getString("Discord.addCommandName");
     static String botToken = config.getString("Discord.botToken");
     static List<String> allowedRoles = new ArrayList<>(config.getList("Discord.allowedRoleIds"));
+    private static JDA jda;
 
     public static void main(String[] args) throws LoginException {
         logger.info("Connecting to Discord...");
@@ -55,14 +54,6 @@ public class Discord extends ListenerAdapter {
         logger.info("You can add this bot to Discord using this link: " + link);
     }
 
-    @Override
-    public void onSlashCommand(SlashCommandEvent event) {
-        if (event.getGuild() == null) return;
-        if (event.getName().equals(addCommand)) {
-            AddCommandHandler.action(event, event.getOption("ign").getAsString());
-        }
-    }
-
     public static boolean hasRole(String discordId, String minecraftUsername) {
         for (Guild guild : jda.getGuilds()) {
             Member member = guild.retrieveMemberById(discordId).complete();
@@ -76,5 +67,13 @@ public class Discord extends ListenerAdapter {
         }
 
         return false;
+    }
+
+    @Override
+    public void onSlashCommand(SlashCommandEvent event) {
+        if (event.getGuild() == null) return;
+        if (event.getName().equals(addCommand)) {
+            AddCommandHandler.action(event, event.getOption("ign").getAsString());
+        }
     }
 }

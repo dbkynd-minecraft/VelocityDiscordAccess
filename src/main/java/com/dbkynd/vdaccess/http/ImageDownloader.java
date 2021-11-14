@@ -1,4 +1,4 @@
-package com.dbkynd.velocitydiscordaccess.http;
+package com.dbkynd.vdaccess.http;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;

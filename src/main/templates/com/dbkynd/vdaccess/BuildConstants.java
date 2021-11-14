@@ -1,4 +1,4 @@
-package com.dbkynd.velocitydiscordaccess;
+package com.dbkynd.vdaccess;
 
 // The constants are replaced before compilation
 public class BuildConstants {
