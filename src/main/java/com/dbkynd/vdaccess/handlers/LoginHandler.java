@@ -3,13 +3,13 @@ package com.dbkynd.vdaccess.handlers;
 import com.dbkynd.vdaccess.VDAccess;
 import com.dbkynd.vdaccess.config.Config;
 import com.dbkynd.vdaccess.discord.Discord;
-import com.dbkynd.vdaccess.permission.LuckPerm;
 import com.dbkynd.vdaccess.sql.MySQLService;
 import com.dbkynd.vdaccess.sql.UserRecord;
 import com.moandjiezana.toml.Toml;
 import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.LoginEvent;
+import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class LoginHandler {
     private static final Toml config = new Config().read();
@@ -29,12 +28,12 @@ public class LoginHandler {
 
     @Subscribe
     public void onLogin(LoginEvent event) {
-        UUID uuid = event.getPlayer().getUniqueId();
-        String username = event.getPlayer().getUsername();
+        Player player = event.getPlayer();
+        String username = player.getUsername();
 
         // Allow join if player has bypass perms
-        if (LuckPerm.hasPermissions(uuid)) {
-            logger.info("[" + username + "] Join allowed. Has luckperm bypass permissions.");
+        if (player.hasPermission("vdaccess.bypass") || player.hasPermission("vdaccess.*")) {
+            logger.info("[" + username + "] Join allowed. Has bypass permissions.");
             return;
         }
 
@@ -44,8 +43,11 @@ public class LoginHandler {
             return;
         }
 
+        String firstChar = username.substring(0,1);
+        String name = firstChar.equals(".") ? username.substring(1) : username;
+
         // Allow if we have a user record with at least one of the required roles
-        UserRecord userRecord = sql.getRegisteredPlayer("uuid", uuid.toString());
+        UserRecord userRecord = sql.getRegisteredPlayer("minecraft_name", name);
         if (userRecord != null) {
             if (Discord.hasRole(userRecord.getDiscordId(), username)) {
                 return;

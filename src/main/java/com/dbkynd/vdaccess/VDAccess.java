@@ -19,10 +19,7 @@ import java.nio.file.Path;
         id = "vdaccess",
         name = "Velocity Discord Access",
         version = BuildConstants.VERSION,
-        authors = {"DBKynd"},
-        dependencies = {
-                @Dependency(id = "luckperms")
-        }
+        authors = {"DBKynd"}
 )
 public class VDAccess {
 

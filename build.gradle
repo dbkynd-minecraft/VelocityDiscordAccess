@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'com.dbkynd'
-version = '1.0'
+version = '1.1'
 def jdaVersion = '4.3.0_340'
 
 repositories {
@@ -25,7 +25,6 @@ repositories {
 dependencies {
     compileOnly "com.velocitypowered:velocity-api:3.0.1"
     annotationProcessor "com.velocitypowered:velocity-api:3.0.1"
-    compileOnly "net.luckperms:api:5.3"
     shadow("mysql:mysql-connector-java:8.0.27")
     shadow("net.dv8tion:JDA:$jdaVersion") {
         exclude module: "opus-java"
