@@ -30,6 +30,17 @@ public class LoginHandler {
     public void onLogin(LoginEvent event) {
         Player player = event.getPlayer();
         String username = player.getUsername();
+        String firstChar = username.substring(0,1);
+        String name = firstChar.equals(".") ? username.substring(1) : username;
+
+        if (VDAccess.server.getPlayer(name).isPresent() || VDAccess.server.getPlayer("." + name).isPresent()) {
+            logger.info("[" + username + "] Join denied.");
+            TextComponent reason = Component.text("The user ").color(NamedTextColor.GOLD)
+                    .append(Component.text(name).color(NamedTextColor.AQUA))
+                            .append(Component.text(" is already logged into the server.").color(NamedTextColor.GOLD));
+            event.setResult(ResultedEvent.ComponentResult.denied(reason));
+            return;
+        }
 
         // Allow join if player has bypass perms
         if (player.hasPermission("vdaccess.bypass") || player.hasPermission("vdaccess.*")) {
@@ -43,8 +54,6 @@ public class LoginHandler {
             return;
         }
 
-        String firstChar = username.substring(0,1);
-        String name = firstChar.equals(".") ? username.substring(1) : username;
 
         // Allow if we have a user record with at least one of the required roles
         UserRecord userRecord = sql.getRegisteredPlayer("minecraft_name", name);
