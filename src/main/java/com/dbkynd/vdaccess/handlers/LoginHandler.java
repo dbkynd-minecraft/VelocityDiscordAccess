@@ -24,6 +24,7 @@ public class LoginHandler {
     private static final Logger logger = VDAccess.logger;
 
     static String kickMessage = config.getString("Discord.Messages.kickMessage");
+    static String banMessage = config.getString("Discord.Messages.banMessage");
     static List<String> allowedRoles = new ArrayList<>(config.getList("Discord.allowedRoleIds"));
 
     @Subscribe
@@ -45,6 +46,14 @@ public class LoginHandler {
         // Allow join if player has bypass perms
         if (player.hasPermission("vdaccess.bypass") || player.hasPermission("vdaccess.*")) {
             logger.info("[" + username + "] Join allowed. Has bypass permissions.");
+            return;
+        }
+
+        // Kick the user if explicitly denied via permissions
+        if (player.hasPermission("vdaccess.banned")) {
+            logger.info("[" + username + "] Join denied via permissions.");
+            TextComponent reason = Component.text(banMessage).color(NamedTextColor.RED);
+            event.setResult(ResultedEvent.ComponentResult.denied(reason));
             return;
         }
 

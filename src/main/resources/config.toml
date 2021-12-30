@@ -8,6 +8,7 @@ allowedRoleIds = []
 embedMessageAdded = "Successfully added to the Minecraft user database!"
 embedMessageUpdated = "Entry found, Minecraft user database updated."
 kickMessage = "You are either not a member of the Discord or have not yet verified your account."
+banMessage = "You have been banned from this server."
 
 [mySQL]
 host = ""
